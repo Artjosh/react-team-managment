@@ -1,0 +1,87 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 15%;
+  height: 100%;
+  background-color: #1b2431;
+  color: white;
+}
+.ihover{
+  color: grey;
+  width: 36.8%;
+  margin-left: 10%;
+  display: flex;
+}
+.ihover:hover{
+  color: white !important;
+}
+.afiliados {
+  background-color: red;
+}
+li:hover{
+  background-color: #505e74;
+  cursor: grab;
+}
+.profile {
+  height: 100%;
+  display: flex;
+}
+
+.content1 span:hover{
+  color: white !important;
+}
+option {
+  background-color: #1b2431;
+}
+select {
+  margin-left: 2%;
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+.save {
+  margin-top: 10%;
+  margin-left: 68%;  
+}
+
+form {
+  padding: 10px;
+}
+
+.photo {
+  margin: 2px;
+  width: 80px;
+  height: 60%;
+  margin-bottom: 1rem;
+  border: 1px solid black;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%; 
+}
+
+.success-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #4CAF50;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  z-index: 9999;
+}
+
+.error-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #f44336;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  z-index: 9999;
+}

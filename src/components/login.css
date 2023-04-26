@@ -1,0 +1,134 @@
+.containers {
+  display: flexbox;
+  width: 40%;
+  height: 45vh;
+  background-color: black;
+  color: #54FE55;
+  margin-left: 30%;
+  margin-top: 10%;
+  position: absolute;
+  border-radius: 20px;
+}
+
+.loginheader {
+  display: flex;               
+  width: 100%;
+  height: 30px;
+  background-color: black;
+  border-bottom: 1px solid gray;
+  font-size: 15px;
+
+}
+
+
+@import url("https://fonts.googleapis.com/css?family=Press+Start+2P");
+
+.welcome .line {
+overflow: hidden;
+width: 0px;
+height: 0px;
+visibility: hidden;
+text-shadow: 0px 0px 10px #54FE55;
+font-family: "Press Start 2P", cursive;
+height: 72px;
+}
+.welcome .line1 {
+animation: type 1s 1s steps(20, end) forwards;
+}
+.welcome .line2 {
+animation: type 1s 2s steps(20, end) forwards;
+}
+
+.welcome .line3 {
+height: 18px;
+animation: type 0.5s 0s steps(20, end) forwards;
+}
+
+.welcome .line4 {
+height: 20px;
+animation: type 1s 3s steps(20, end) forwards;
+}
+.welcome .line5 {
+height: 44px;
+animation: type 1s 3.5s steps(20, end) forwards;
+}
+.welcome .line6 {
+height: 20px;
+animation: type 1s 4.5s steps(20, end) forwards;
+}
+.welcome .line7 {
+height: 44px;
+animation: type 1s 5s steps(20, end) forwards;
+}
+.welcome .line8 {
+height: 40px;
+animation: type 1s 6s steps(20, end) forwards;
+}
+.welcome .line9 {
+  animation: type 1s 7s steps(20, end) forwards;
+  }
+
+@keyframes type {
+to {
+  width: 364px;
+  visibility: visible;
+}
+}
+.loginform {
+display: flex;
+flex-direction: column;
+font-family: "Press Start 2P", cursive;
+margin-left: 25%;
+margin-right: 25%;
+
+}
+.loginform label {
+margin-bottom: 1rem;
+display: flex;
+flex-direction: column;
+text-shadow: 0px 0px 10px #54FE55;
+}
+.loginform input {
+background: black;
+border: 1px solid #54FE55;
+margin-top: 0.5rem;
+padding: 0.5rem;
+color: #54FE55;
+text-shadow: 0px 0px 10px #54FE55;
+box-shadow: 0px 0px 5px #54FE55;
+}
+form input:focus {
+outline: none;
+}
+.loginform button {
+padding: 0.5rem;
+background: #1a4f1a;
+color: #54FE55;
+border: 0;
+text-shadow: 0px 0px 10px #54FE55;
+box-shadow: 0px 0px 10px #1a4f1a;
+cursor: pointer;
+}
+form button:focus {
+outline: none;
+}
+
+@keyframes blink {
+0% {
+  opacity: 0;
+}
+49% {
+  opacity: 0;
+}
+50% {
+  opacity: 1;
+}
+100% {
+  opacity: 1;
+}
+}
+.blink {
+animation-name: blink;
+animation-duration: 1s;
+animation-iteration-count: infinite;
+}

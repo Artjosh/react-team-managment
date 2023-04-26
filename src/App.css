@@ -1,0 +1,101 @@
+.MainContainer {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: #1b2431;
+    z-index: 0;
+    position: relative;
+}
+.App.push-right {
+    margin-left: 14%;
+    width: 85%;
+    height: 969px;
+}
+
+.App {
+    width: 100%;
+    height: 969px;
+    position: fixed;
+}
+
+.ContentContainer {
+    display: flex;
+    flex-direction: column;
+    width: 96%;
+    margin-left: 2%;
+    height: 80%;
+    background-color:#273142; 
+} 
+
+.header {
+    background-color: #273142;
+    width: 100%;
+    height: 15%;
+  }
+.head{
+    display: flex;
+    width: 100%;
+    height: 75%;
+}
+.art{
+    margin-top: 4%;
+    width: 4%;
+    font-size: 75%;
+    background-color: #505e74;
+}
+.art span{
+    margin-left: -12%;
+}
+.art:hover {
+    transform: scale(1.1);
+    background-color: #505e74;
+    color: #273142;
+    cursor: pointer;
+  }
+.active {
+    transform: scale(1.1);
+    background-color: #273142;
+    color: #fff;
+}
+.active:hover {
+    transform: scale(1.2);
+    background-color: #273142;
+    color: #fff;
+}
+  
+.footer {
+    margin-top: 0.7%;
+    display: grid;
+    width: 100%;
+    height: 30%;
+    background-color: #505e74;
+    grid-template-columns: repeat(3, 33%);
+}
+.grid-container2 div{
+    font-size: 10px;
+    color: white;
+    border-bottom: 1px solid gray;
+    margin-right: 3%;
+}
+.grid-container2 div:hover{
+    background-color: #505e74;
+}
+
+table{
+    height: 100%;
+    display: flex;
+}
+table tbody{
+    height: 100%;
+    width: 33%;
+}
+table th{
+    font-weight: normal;
+}
+
+.grid-container2 {
+    margin-top: 1%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 65px);
+}

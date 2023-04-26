@@ -1,0 +1,68 @@
+{
+  "name": "dnv",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@geoapify/geocoder-autocomplete": "^1.5.1",
+    "@googlemaps/react-wrapper": "^1.1.35",
+    "@react-google-maps/api": "^2.18.1",
+    "@supabase/supabase-js": "^2.10.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "animate.css": "^4.1.1",
+    "bootstrap": "^5.2.3",
+    "date-fns": "^2.29.3",
+    "geocode-js": "^1.0.3",
+    "google-map-react": "^2.2.0",
+    "https-browserify": "^1.0.0",
+    "leaflet": "^1.9.3",
+    "material-design-iconic-font": "^2.2.0",
+    "moment": "^2.29.4",
+    "nominatim-client": "^3.2.1",
+    "nominatim-geocoder": "^0.1.4",
+    "ramda": "^0.28.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-datepicker": "^4.8.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
+    "react-leaflet": "^4.2.1",
+    "react-modal": "^3.16.1",
+    "react-scripts": "5.0.1",
+    "react-spring": "^9.7.1",
+    "rsuite": "^5.24.1",
+    "terminal-in-react": "^4.3.1",
+    "web-vitals": "^2.1.4",
+    "xterm": "^5.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "less": "^4.1.3"
+  }
+}

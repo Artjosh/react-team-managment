@@ -1,0 +1,37 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5); /* fundo escuro para destacar a modal */
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: aliceblue;
+    border: 1px solid #000;
+    padding: 20px;
+    max-width: 400px; /* ajuste o tamanho máximo da modal conforme sua preferência */
+    text-align: center;
+}
+
+
+.modalhead{
+ background-color: aliceblue;   
+}
+.modalbody{
+    background-color: aliceblue;
+}
+
+.close-btn {
+    margin-left: 40%;
+  cursor: pointer;
+  background-color: aliceblue;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 20%;
+}

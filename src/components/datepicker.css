@@ -1,0 +1,21 @@
+.header-datepicker{
+    background: #f0f0f0; 
+}
+.react-datepicker-wrapper{
+    position: absolute;
+    width: 4% !important;
+    height: 6%;
+}
+.react-datepicker__input-container{
+    display: block !important;
+}
+.react-datepicker-popper{
+    margin-top: 4%;
+    transform: none !important;
+    margin-left: 2%;
+}
+
+.react-datepicker__day--outside-month {
+    color: blue !important;
+    font-weight: bold;
+} 
