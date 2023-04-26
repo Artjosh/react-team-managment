@@ -145,13 +145,13 @@ import SelectSupabase from './SelectSupabase';
       };
     }, [setShowForm]);
 
-/*     useEffect(() => {
+    useEffect(() => {
       if (!dia || !hora) {
         setshowModal(true);
       } else {
         setshowModal(false);
       }
-    }, [dia, hora]); */
+    }, [dia, hora]);
 
 
 
