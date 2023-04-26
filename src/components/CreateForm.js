@@ -89,7 +89,7 @@ import SelectSupabase from './SelectSupabase';
                 },
                 body: JSON.stringify(data),
               };
-              fetch('http://201.14.234.37/afiliadoaddeventomsg', options)
+              fetch('http://201.14.234.37:3001/afiliadoaddeventomsg', options)
                 .then((response) => {
                   console.log(response);
                 })
