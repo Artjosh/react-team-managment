@@ -153,8 +153,6 @@ import SelectSupabase from './SelectSupabase';
       }
     }, [dia, hora]);
 
-
-
     const handlesearchclick = async () => {
       console.log(f)
       const carregarCoordenadas = async () => {
