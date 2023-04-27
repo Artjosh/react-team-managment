@@ -9,7 +9,7 @@ function InsertSupabase() {
   // Inserir um afiliado na tabela 'afiliados'
   const insertAfiliado = async (nome, numero, opcao) => {
     try {
-      const { error } = await supabase.from("afiliados").insert([{ nome, numero, estado: 'incial', opcao }]);
+      const { error } = await supabase.from("afiliados").insert([{ nome, numero, estado: 'inicial', opcao }]);
       if (error) {
         console.error(error);
         throw new Error(error.message);
