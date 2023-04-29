@@ -89,7 +89,7 @@ import SelectSupabase from './SelectSupabase';
                 },
                 body: JSON.stringify(data),
               };
-              fetch('http://54.94.236.89:3001/afiliadoaddeventomsg', options)
+              fetch('https://951f-18-230-24-247.ngrok-free.app/afiliadoaddeventomsg', options)
                 .then((response) => {
                   console.log(response);
                 })
@@ -118,7 +118,7 @@ import SelectSupabase from './SelectSupabase';
                 },
                 body: JSON.stringify(data),
               };
-              fetch('http://54.94.236.89:3001/afiliadoaddeventomsg', options)
+              fetch('https://951f-18-230-24-247.ngrok-free.app/afiliadoaddeventomsg', options)
                 .then((response) => {
                   console.log(response);
                 })

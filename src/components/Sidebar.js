@@ -52,7 +52,7 @@ function Sidebar() {
       .insertAfiliado(nome, numero, opcao)
       .then(() => {
         // Chama o fetch para enviar a mensagem via API do Whatsapp
-        fetch('https://11d6-2804-d51-601d-7e00-a990-84b3-979c-b6bb.ngrok-free.app/afiliadoaddmsg', options)
+        fetch('https://951f-18-230-24-247.ngrok-free.app/afiliadoaddmsg', options)
           .then((response) => response.json())
           .then((data) => console.log(data))
           .catch((error) => console.error(error));
