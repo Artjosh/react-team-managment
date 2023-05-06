@@ -1,10 +1,13 @@
-import { useState} from 'react';
+import { useState, useEffect } from 'react';
 import icon from './testicon.png';
 import icon2 from './testiconinvert.png';
 import ModalCountdown from './ModalCountdown.js'
 import { isSameDay } from "date-fns";
+import SelectSupabase from './SelectSupabase';
+import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
 
-function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f }) {
+
+function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f, fornosConfirmados, fornosPending, garconsConfirmados, garconsPending }) {
   const [itensArrastados, setItensArrastados] = useState([]);
   const [expandido, setExpandido] = useState(false);
   const [testM, setTestM] = useState(false);
@@ -58,11 +61,9 @@ function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f }) {
        const afiliadosDisponiveisFiltrados = afiliadosDisponiveis.filter((item) => {
           if (itens.some((id) => id === item.id)) {
             // o ID está presente em ambas as listas
-            console.log('art')
             return false;
           } else {
             // o ID não está presente em ambas as listas
-            console.log('josh')
             return true;
           }
         })
@@ -113,8 +114,7 @@ function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f }) {
               else {
                 setItensArrastados([...itensArrastados, { id, nome, diahora }]);
                 onChange({ target: { value: id } });
-                onChange2({ target: { value: id }})
-                console.log(itens)
+                onChange2({ target: { value: id }});
               }
               
             }
@@ -125,8 +125,7 @@ function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f }) {
             else {
               setItensArrastados([...itensArrastados, { id, nome, diahora }]);
               onChange({ target: { value: id } });
-              onChange2({ target: { value: id }})
-              console.log(itens)
+              onChange2({ target: { value: id }});
             }
 
           }
@@ -135,17 +134,151 @@ function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f }) {
       }
     }
   }
-  
-
   function handleDragOver(e) {
     e.preventDefault();
   }
-
   function handleExpandir(e) {
     e.preventDefault();
     setExpandido(!expandido);
+    console.log(itensArrastados)
   }
-
+  
+  useEffect(() => {
+  if (fornosConfirmados !== undefined && fornosConfirmados !== null &&
+      fornosPending !== undefined && fornosPending !== null) {
+        fornosConfirmados.forEach(id => {
+          const selectSupabase = SelectSupabase({ setItensArrastados });
+          selectSupabase
+            .getAfiliadoById(id)
+            .then(afiliado => {
+              if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+                setItensArrastados((prevItensArrastados) => [
+                  ...prevItensArrastados,
+                  { id: parseInt(id), nome: afiliado.nome },
+                ]);
+              }
+            })
+            .catch(error => console.error(error));
+        });
+      fornosPending.forEach(id => {
+        const selectSupabase = SelectSupabase({ setItensArrastados });
+        selectSupabase
+          .getAfiliadoById(id)
+          .then(afiliado => {
+            if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+              setItensArrastados((prevItensArrastados) => [
+                ...prevItensArrastados,
+                { id: parseInt(id), nome: afiliado.nome },
+              ]);
+            }
+          })
+          .catch(error => console.error(error));
+      });
+    } else {
+      if (fornosConfirmados !== undefined && fornosConfirmados !== null) {
+        fornosConfirmados.forEach(id => {
+          const selectSupabase = SelectSupabase({ setItensArrastados });
+          selectSupabase
+            .getAfiliadoById(id)
+            .then(afiliado => {
+              if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+                setItensArrastados((prevItensArrastados) => [
+                  ...prevItensArrastados,
+                  { id: parseInt(id), nome: afiliado.nome },
+                ]);
+              }
+            })
+            .catch(error => console.error(error));
+        });
+      }
+      if (fornosPending !== undefined && fornosPending !== null) {
+        fornosPending.forEach(id => {
+          const selectSupabase = SelectSupabase({ setItensArrastados });
+          selectSupabase
+            .getAfiliadoById(id)
+            .then(afiliado => {
+              if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+                setItensArrastados((prevItensArrastados) => [
+                  ...prevItensArrastados,
+                  { id: parseInt(id), nome: afiliado.nome },
+                ]);
+              }
+            })
+            .catch(error => console.error(error));
+        });
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fornosConfirmados, fornosPending]);
+  useEffect(() => {
+    if (garconsConfirmados !== undefined && garconsConfirmados !== null &&
+        garconsPending !== undefined && garconsPending !== null) {
+      garconsConfirmados.forEach(id => {
+        const selectSupabase = SelectSupabase({ setItensArrastados });
+        selectSupabase
+          .getAfiliadoById(id)
+          .then(afiliado => {
+            if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+              setItensArrastados((prevItensArrastados) => [
+                ...prevItensArrastados,
+                { id: parseInt(id), nome: afiliado.nome },
+              ]);
+            }
+          })
+          .catch(error => console.error(error));
+      });
+      garconsPending.forEach(id => {
+        const selectSupabase = SelectSupabase({ setItensArrastados });
+        selectSupabase
+          .getAfiliadoById(id)
+          .then(afiliado => {
+            if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+              setItensArrastados((prevItensArrastados) => [
+                ...prevItensArrastados,
+                { id: parseInt(id), nome: afiliado.nome },
+              ]);
+            }
+          })
+          .catch(error => console.error(error));
+      });
+    } else {
+      if (garconsConfirmados !== undefined && garconsConfirmados !== null) {
+        garconsConfirmados.forEach(id => {
+          const selectSupabase = SelectSupabase({ setItensArrastados });
+          selectSupabase
+            .getAfiliadoById(id)
+            .then(afiliado => {
+              if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+                setItensArrastados((prevItensArrastados) => [
+                  ...prevItensArrastados,
+                  { id: parseInt(id), nome: afiliado.nome },
+                ]);
+              }
+            })
+            .catch(error => console.error(error));
+        });
+      }
+      if (garconsPending !== undefined && garconsPending !== null) {
+        garconsPending.forEach(id => {
+          const selectSupabase = SelectSupabase({ setItensArrastados });
+          selectSupabase
+            .getAfiliadoById(id)
+            .then(afiliado => {
+              if (!itensArrastados.find((item) => item.id === parseInt(id))) {
+                setItensArrastados((prevItensArrastados) => [
+                  ...prevItensArrastados,
+                  { id: parseInt(id), nome: afiliado.nome },
+                ]);
+              }
+            })
+            .catch(error => console.error(error));
+        });
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [garconsConfirmados, garconsPending]);
+  
+  
 const testing = 'Algum afiliado não foi inserido por estar ocupado neste horario';
     return (
       <>{testM && <ModalCountdown/> }
@@ -162,7 +295,7 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
               {itensArrastados.map((item, ) => (
                 <div key={item.id}>{item.nome}</div>
               ))}
-            </span> 
+            </span>
           </div>)
           : (
             <div
@@ -173,9 +306,13 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
               {itensArrastados.length >= 0 && (
                 <button onClick={handleExpandir} style={{ backgroundImage: `url(${icon})`, border:'1px solid black' , position:'fixed', marginLeft:'12.6%', marginTop:'9.25%', width:'23px', height:'12px' }}>
                 </button>
-              )}<span style={{fontSize: '15px'}}>
+              )}<span style={{fontSize: '15px', width:'100%'}}>
                 {itensArrastados.map((item) => (
-                  <div key={item.id}>{item.nome}</div>
+                  <div style={{ display: 'flex', position: 'relative' }} key={item.id}>
+                  {item.nome}
+                  <i class="zmdi zmdi-close" style={{ color:'red', marginTop: '0.4%', height: '15px', position: 'absolute', right: '2%' }}></i>
+                </div>
+                
                 ))}
               </span> 
             </div>

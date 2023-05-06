@@ -36,13 +36,13 @@ function InsertSupabase() {
   
       // Verifica se o valor já existe na coluna 'pendente'
       const pendente = (data[0].pendente || '');
-      if (pendente.includes(`${A},`)) {
+      if (pendente.includes(`${A}`)) {
         console.log(`O evento ${A} já existe na coluna pendente do afiliado com ID ${id}`);
         return;
       }
-  
+      
       // Concatena o novo valor à coluna 'pendente' com os valores antigos
-      const newPendente = `${pendente}${A},`;
+      const newPendente =  pendente ? `${pendente},${A}` : `${A}`;
   
       // Atualiza o registro com o valor concatenado
       const { error: updateError } = await supabase

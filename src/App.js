@@ -19,48 +19,41 @@ function App() {
   const [eventos, setEventos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDate, setSelectedDate] = useState(); // novo estado para armazenar a data selecionada
-  const [isLogedIn, setIsLogedIn] = useState(false);
+  const [isLogedIn, setIsLogedIn] = useState(true);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [GreenLight, setGreenLight] = useState(false);
   const [dashboard, setDashboard] = useState(false);
   const [active, setActive] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-const makeLogin = () => {
-     setIsLogedIn(true);
-};
-
-
-useEffect(() => {
-  if (GreenLight) {
-    const timer = setTimeout(() => {
-      makeLogin();
-    }, 2000);
-    return () => clearTimeout(timer);
-  }
-}, [GreenLight]);
-
+  const makeLogin = () => {
+      setIsLogedIn(true);
+  };
+  useEffect(() => {
+    if (GreenLight) {
+      const timer = setTimeout(() => {
+        makeLogin();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [GreenLight]);
   const handleLogin = () => {
       setShowLoginForm(false);
       setGreenLight(true);      
   };
-
   const handleSearch = (searchTerm) => {
     setSearchTerm(searchTerm);
   };
-
   const handleDashboard = () => {
     setDashboard(!dashboard);
     setSelectedDate(false);
     setActive(!active);
   };
-
   const handleDateSelect = (date) => {
     const selectedDate = moment(date).format('YYYY-MM-DD');
     setSelectedDate(selectedDate);
     setDashboard(false);      
   };
-
-
   useEffect(() => {
     const selectSupabase = SelectSupabase({ setEventos });
     selectSupabase
@@ -77,23 +70,23 @@ useEffect(() => {
       selectSupabase.unsubscribe();
     };
   }, []);
-
   const handleShowForm = () => {
     setShowForm(true);
   };
-
   const onClickShowForm = () => {
     setShowLoginForm(!showLoginForm);
   };
-
-  
   const setClose = () => {
     setShowLoginForm(!showLoginForm);
+  };
+  const handleListItemClick = (item) => {
+    setSelectedItem(item);
+    setShowForm(true);
+    console.log(item);
   };
 
 const currentDate = new Date();
 const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
-
   // filtragem de eventos baseada em searchTerm e selectedDate
   const filteredEventos = eventos.filter((evento) => {
     if (dashboard) {
@@ -110,20 +103,18 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
       return evento.nomecontratante.toLowerCase().includes(searchTerm.toLowerCase());
     }
   });
-
-
-const handleLogout = () => {
-  setGreenLight(false);
-  setIsLogedIn(!isLogedIn);
-}
-const gridContainer = document.getElementById('grid-container2');
-if (gridContainer) {
-  if (filteredEventos.length <= 30) {
-    gridContainer.style.overflowY = 'hidden';
-  } else {
-    gridContainer.style.overflowY = 'scroll';
+  const handleLogout = () => {
+    setGreenLight(false);
+    setIsLogedIn(!isLogedIn);
   }
-} 
+  const gridContainer = document.getElementById('grid-container2');
+  if (gridContainer) {
+    if (filteredEventos.length <= 30) {
+      gridContainer.style.overflowY = 'hidden';
+    } else {
+      gridContainer.style.overflowY = 'scroll';
+    }
+  } 
 
   return (
     <div className={`App ${isLogedIn ? 'push-right' : ''}`}>
@@ -135,7 +126,7 @@ if (gridContainer) {
           handleDashboard={handleDashboard} />
           <CardList></CardList>
           <div className="MainContainer">
-            {showForm && <CreateForm setShowForm={setShowForm} />}
+            {showForm && <CreateForm selectedItem={selectedItem} setShowForm={setShowForm} setSelectedItem={setSelectedItem} />}
             <div className="ContentContainer">
             <div className="header">
               <div className='head'>
@@ -197,7 +188,7 @@ if (gridContainer) {
             </div>
             <div className="grid-container2" id='grid-container2'>
               {filteredEventos.slice(0).map((item) => (  
-            <div key={item.id}>
+            <div key={item.id} onClick={() => handleListItemClick(item)}>
               <table>
                 <tbody>
                   <tr>
