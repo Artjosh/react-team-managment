@@ -19,7 +19,7 @@ function App() {
   const [eventos, setEventos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDate, setSelectedDate] = useState(); // novo estado para armazenar a data selecionada
-  const [isLogedIn, setIsLogedIn] = useState(true);
+  const [isLogedIn, setIsLogedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [GreenLight, setGreenLight] = useState(false);
   const [dashboard, setDashboard] = useState(false);
