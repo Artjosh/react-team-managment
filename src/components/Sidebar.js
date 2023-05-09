@@ -89,7 +89,12 @@ function Sidebar() {
     newHeights[word] = divHeights[word] === '3%' ? '20%' : '3%';
     setDivHeights(newHeights);
   };
-  
+  const [iframewidth, setiframewidth] = useState(false);
+  function onclicktest() {
+    console.log('test')
+    setiframewidth(!iframewidth);
+  }
+
   return (
     <div className='sidebar content1'>
       <div><h1 style={{ marginLeft:'10px'}} className="h1style">Cecchin Eventos</h1></div>
@@ -146,6 +151,18 @@ function Sidebar() {
             <i style={{ marginLeft:'10%', color: divHeights['word2'] !== '3%' ? 'white' : '' }} className="zmdi zmdi-accounts zmdi-hc-2x"></i>
           <span style={{ color: divHeights['word2'] === '3%' ? 'gray' : 'white', marginLeft:'10%', marginTop:'7%', cursor: 'pointer'}} onClick={() => handleClick('word2')}>Afiliados</span></div>
           { divHeights['word2'] === '3%' ? ( null ) : (<AfiliadosList></AfiliadosList>) }
+        </div>
+        <button style={{width: iframewidth ? '20%' : '18%', height:'3%', marginTop: iframewidth ? '95%' : '200%'}} onClick={() => onclicktest()}>
+          {iframewidth ? 'Fechar' : 'Abrir'}
+        </button>
+        <div style={{height: "40%", width: iframewidth ? '300%' : '105%' }}>
+            <iframe
+                title='test'
+                src={`https://ora.ai/embed/ae1bb3af-abcd-4afa-863c-82e32b171cc4`}
+                width="100%"
+                height="100%"
+                style={{ border: "0", borderRadius: "4px" }}
+            />
         </div>
 {/*         <div
           style={{ height: `${divHeights['word3']}`, width: '100%', margin: 0, padding: 0 }}>

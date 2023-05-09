@@ -36,6 +36,18 @@ function SelectSupabase({ setAfiliados, setEventos, setItensArrastados }) {
     }
     return data;
   }
+  function handleEventoUpdate(updatedEvento) {
+    setEventos((prevState) => {
+      const updatedEventos = prevState.map((evento) => {
+        if (evento.id === updatedEvento.id) {
+          // Atualiza o evento com os novos dados
+          return { ...evento, ...updatedEvento };
+        }
+        return evento;
+      });
+      return updatedEventos;
+    });
+  }  
   function handleEventoInsert(newEvento) {
     setEventos((prevState) => {
       // Verifica se o ID já existe na lista existente
@@ -104,6 +116,23 @@ function SelectSupabase({ setAfiliados, setEventos, setItensArrastados }) {
       )
       .subscribe();
   }
+  function subscribeToEventsUpdates() {
+    subscription = supabase
+      .channel('table-db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'eventos',
+        },
+        (payload) => {
+          console.log('Atualizado:', payload);
+          handleEventoUpdate(payload.new);
+        }
+      )
+      .subscribe();
+  }  
   function unsubscribe() {
     if (subscription) {
       subscription.unsubscribe();
@@ -111,6 +140,7 @@ function SelectSupabase({ setAfiliados, setEventos, setItensArrastados }) {
     }
   }
   return {
+    subscribeToEventsUpdates,
     getAfiliados,
     subscribeToAfiliadoInserts,
     unsubscribe,

@@ -7,7 +7,7 @@ import SelectSupabase from './SelectSupabase';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
 
 
-function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f, fornosConfirmados, fornosPending, garconsConfirmados, garconsPending }) {
+function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f, fornosConfirmados, fornosPending, garconsConfirmados, garconsPending, onRemove }) {
   const [itensArrastados, setItensArrastados] = useState([]);
   const [expandido, setExpandido] = useState(false);
   const [testM, setTestM] = useState(false);
@@ -23,7 +23,6 @@ function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f, for
   
       // verifica se a informação é uma lista de afiliados
       if (data.startsWith('[')) {
-        /* console.log(lista) */
         const afiliados = JSON.parse(data);
         const novosItens = afiliados.filter((afiliado) => !itensArrastados.some((item) => item.id === afiliado.id));
         const afiliadosDisponiveis = novosItens.filter((afiliado) => {
@@ -78,7 +77,6 @@ function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f, for
       
       else { // se for apenas um afiliado
         const { id, nome, diahora } = JSON.parse(data);
-        /* console.log(data); */
         const [diaAfiliado ,horaAfiliado] = diahora.split(",");
         const diaAfiliado2 = new Date(diaAfiliado);
         const diaEvento = dia.replace(/-/g, "/");
@@ -140,9 +138,11 @@ function AfiliadoEvent({ className, onChange, test, dia, hora, onChange2, f, for
   function handleExpandir(e) {
     e.preventDefault();
     setExpandido(!expandido);
-    console.log(itensArrastados)
   }
-  
+  function handleRemove(id) {
+    setItensArrastados(prevItensArrastados => prevItensArrastados.filter(item => item.id !== id));
+    onRemove(id);
+  }
   useEffect(() => {
   if (fornosConfirmados !== undefined && fornosConfirmados !== null &&
       fornosPending !== undefined && fornosPending !== null) {
@@ -287,13 +287,20 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
           <div
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            style={{ width: '50%', height: '280px', border: '1px solid black', overflow: 'auto', marginTop:'20px', marginLeft:'5px', backgroundColor:'white' }}
+            style={{ display:'flex', width: '50%', height: '280px', border: '1px solid black', overflow: 'auto', marginTop:'20px', marginLeft:'5px', backgroundColor:'white' }}
           ><span style={{ position:'fixed', marginTop:'-20px' }}>{className}</span>
             <button onClick={handleExpandir} style={{ backgroundImage: `url(${icon2})`, marginTop:'-12px',border:'1px solid black' , position:'fixed', marginLeft:'12.6%', width:'23px', height:'12px' }}>
             </button>
-            <span style={{fontSize: '15px'}}>
+            <span style={{fontSize: '15px', width:'100%'}}>
               {itensArrastados.map((item, ) => (
-                <div key={item.id}>{item.nome}</div>
+                <div style={{ display: 'flex', position: 'relative' }} key={item.id}>{item.nome}
+                {((fornosConfirmados && fornosConfirmados.includes(item.id)) || (garconsConfirmados && garconsConfirmados.includes(item.id)) ? (
+                      <i className="zmdi zmdi-check" style={{ font:'bold', fontSize:'200%', color:'green', position: 'absolute', right: '10%' }}></i>
+                    ) : (
+                      <></>
+                    ))}
+                  <i className="zmdi zmdi-close" onClick={() => handleRemove(item.id)} style={{ fontSize:'200%', font:'bold', cursor:'pointer', color:'red', position: 'absolute', right: '2%' }}></i>
+                </div>
               ))}
             </span>
           </div>)
@@ -301,7 +308,7 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
             <div
               onDrop={handleDrop}
               onDragOver={handleDragOver}
-              style={{  marginLeft:'5px', width: '50%', height: '180px', display: 'flex', border: '1px solid black', overflow: 'auto', marginTop:'20px', backgroundColor:'white' }}
+              style={{ marginLeft:'5px', width: '50%', height: '180px', display: 'flex', border: '1px solid black', overflow: 'auto', marginTop:'20px', backgroundColor:'white' }}
             ><span style={{ position:'fixed', marginTop:'-20px' }}>{className}</span>
               {itensArrastados.length >= 0 && (
                 <button onClick={handleExpandir} style={{ backgroundImage: `url(${icon})`, border:'1px solid black' , position:'fixed', marginLeft:'12.6%', marginTop:'9.25%', width:'23px', height:'12px' }}>
@@ -310,9 +317,13 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
                 {itensArrastados.map((item) => (
                   <div style={{ display: 'flex', position: 'relative' }} key={item.id}>
                   {item.nome}
-                  <i class="zmdi zmdi-close" style={{ color:'red', marginTop: '0.4%', height: '15px', position: 'absolute', right: '2%' }}></i>
+                  {((fornosConfirmados && fornosConfirmados.includes(item.id)) || (garconsConfirmados && garconsConfirmados.includes(item.id)) ? (
+                      <i className="zmdi zmdi-check" style={{ font:'bold', fontSize:'200%', color:'green', position: 'absolute', right: '10%' }}></i>
+                    ) : (
+                      <></>
+                    ))}
+                  <i className="zmdi zmdi-close" onClick={() => handleRemove(item.id)} style={{ fontSize:'200%', font:'bold', cursor:'pointer', color:'red', position: 'absolute', right: '2%' }}></i>
                 </div>
-                
                 ))}
               </span> 
             </div>
