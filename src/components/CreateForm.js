@@ -48,7 +48,7 @@ import DeleteModal from './DeleteModal.js'
               },
               body: JSON.stringify(data),
             };
-            fetch('https://b635-18-230-24-247.ngrok-free.app/afiliadoaddeventomsg', options)
+            fetch('https://b0d1-18-230-24-247.ngrok-free.app/afiliadoaddeventomsg', options)
               .then((response) => {
                 console.log(response);
               })
@@ -79,7 +79,7 @@ import DeleteModal from './DeleteModal.js'
               },
               body: JSON.stringify(data),
             };
-            fetch('https://b635-18-230-24-247.ngrok-free.app/afiliadoaddeventomsg', options)
+            fetch('https://b0d1-18-230-24-247.ngrok-free.app/afiliadoaddeventomsg', options)
               .then((response) => {
                 console.log(response);
               })
