@@ -1,11 +1,24 @@
 import { createClient } from '@supabase/supabase-js';
 
-function SelectSupabase({ setAfiliados, setEventos, setItensArrastados }) {
+function SelectSupabase({ setAfiliados, setEventos }) {
   const supabaseUrl = 'https://roijvfnoognumwjbyymt.supabase.co';
   const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvaWp2Zm5vb2dudW13amJ5eW10Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY3MzU4MjI5MiwiZXhwIjoxOTg5MTU4MjkyfQ.I77twttru16VK-OJ7t2P0FEegXZrj6lT_RDuShWxDkI';
   const supabase = createClient(supabaseUrl, supabaseKey);
   let subscription;
 
+  const getAfiliadosByIdsBulk = async (ids) => {
+    const { data, error } = await supabase
+      .from('afiliados')
+      .select('*')
+      .in('id', ids.map((id) => String(id).trim()));
+  
+    if (error) {
+      throw error;
+    }
+    
+    return data;
+  };
+  
   async function getAfiliados() {
     const { data, error } = await supabase.from('afiliados').select('*');
     if (error) {
@@ -80,6 +93,34 @@ function SelectSupabase({ setAfiliados, setEventos, setItensArrastados }) {
       return [...prevState, newAfiliado];
     });
   }
+  async function deleteEvento(eventoId) {
+    const { error } = await supabase
+      .from('eventos')
+      .delete()
+      .eq('id', eventoId);
+
+    if (error) {
+      throw error;
+    }
+
+    // Atualize o estado para refletir a exclusão do evento
+    setEventos((prevState) => prevState.filter((evento) => evento.id !== eventoId));
+  }
+  function handleEventoDelete(deletedEventoId) {
+  setEventos((prevState) =>
+    prevState.filter((evento) => evento.id !== deletedEventoId)
+  );
+  }
+  async function obterUrlPublica(nomeDoArquivo) {
+    const { data, error } = supabase.storage
+      .from('pfp')
+      .getPublicUrl(nomeDoArquivo);
+    if (error) {
+      console.error(error);
+      return null;
+    }
+    return data.publicUrl;
+  }
   function subscribeToEventsInserts() {
     subscription = supabase
      .channel('table-db-changes')
@@ -127,8 +168,25 @@ function SelectSupabase({ setAfiliados, setEventos, setItensArrastados }) {
           table: 'eventos',
         },
         (payload) => {
-          console.log('Atualizado:', payload);
+          console.log('Evento Atualizado:', payload);
           handleEventoUpdate(payload.new);
+        }
+      )
+      .subscribe();
+  }
+  function subscribeToEventsDeletes() {
+    subscription = supabase
+      .channel('table-db-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'DELETE',
+          schema: 'public',
+          table: 'eventos',
+        },
+        (payload) => {
+          console.log('Deletado:', payload);
+          handleEventoDelete(payload.old.id);
         }
       )
       .subscribe();
@@ -147,7 +205,11 @@ function SelectSupabase({ setAfiliados, setEventos, setItensArrastados }) {
     getEventos,
     subscribeToEventsInserts,
     getAfiliadoById,
-    getAfiliadosByIds
+    getAfiliadosByIds,
+    deleteEvento,
+    subscribeToEventsDeletes,
+    obterUrlPublica,
+    getAfiliadosByIdsBulk
   };
 }
 

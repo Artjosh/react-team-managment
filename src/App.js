@@ -3,7 +3,7 @@ import '/node_modules/bootstrap/dist/js/bootstrap.bundle.min';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyNavbar from './components/MyNavbar';
 import { Image } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import CreateForm from './components/CreateForm';
 import SelectSupabase from './components/SelectSupabase';
 import moment from 'moment';
@@ -13,18 +13,24 @@ import door2 from './2.png';
 import door3 from './3.png';
 import CardList from './components/CardList';
 import Datepicker from './components/Datepicker.js';
+import Carrosel from './components/Carrosel.js'
 
 function App() {
   const [showForm, setShowForm] = useState(false);
   const [eventos, setEventos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDate, setSelectedDate] = useState(); // novo estado para armazenar a data selecionada
-  const [isLogedIn, setIsLogedIn] = useState(false);
+  const [isLogedIn, setIsLogedIn] = useState(true);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [GreenLight, setGreenLight] = useState(false);
   const [dashboard, setDashboard] = useState(false);
   const [active, setActive] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [eventoArrayConfirmadosFornos, setEventoArrayConfirmadosFornos] = useState([]);
+  const [eventoArrayPendingFornos, setEventoArrayPendingFornos] = useState([]);
+  const [eventoArrayConfirmadosGarcons, setEventoArrayConfirmadosGarcons] = useState([]);
+  const [eventoArrayPendingGarcons, setEventoArrayPendingGarcons] = useState([]);
+  const [eventoIndex, setEventoIndex] = useState(0);
 
   const makeLogin = () => {
       setIsLogedIn(true);
@@ -65,12 +71,18 @@ function App() {
       })
       .catch((error) => console.error(error));
     selectSupabase.subscribeToEventsInserts();
-    selectSupabase.subscribeToEventsUpdates();
     
     return () => {
       selectSupabase.unsubscribe();
     };
   }, []);
+  useEffect(() => {
+    const selectSupabase = SelectSupabase({ setEventos });
+    selectSupabase.subscribeToEventsUpdates();
+    return () => {
+      selectSupabase.unsubscribe();
+    };
+  },[]);
   const handleShowForm = () => {
     setShowForm(true);
   };
@@ -83,9 +95,17 @@ function App() {
   const handleListItemClick = (item) => {
     setSelectedItem(item);
     setShowForm(true);
-    console.log(item);
   };
+  useEffect(() => {
+    const selectSupabase = SelectSupabase({ setEventos });
+    // Exemplo de chamada da função subscribeToEventsDeletes
+    selectSupabase.subscribeToEventsDeletes();
 
+    return () => {
+      // Chama unsubscribe quando o componente é desmontado
+      selectSupabase.unsubscribe();
+    };
+  }, []); 
 const currentDate = new Date();
 const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
   // filtragem de eventos baseada em searchTerm e selectedDate
@@ -104,6 +124,9 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
       return evento.nomecontratante.toLowerCase().includes(searchTerm.toLowerCase());
     }
   });
+  useEffect(() => {
+    setEventoIndex(0);
+  }, [eventos]);
   const handleLogout = () => {
     setGreenLight(false);
     setIsLogedIn(!isLogedIn);
@@ -115,7 +138,81 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
     } else {
       gridContainer.style.overflowY = 'scroll';
     }
-  } 
+  }
+  const selectSupabase = SelectSupabase({ setEventos });
+  const eventosRef = useRef([]);
+  
+  
+  useEffect(() => {
+    eventosRef.current = filteredEventos.slice();
+  
+    if (eventoIndex < eventosRef.current.length) {
+      const evento = eventosRef.current[eventoIndex];
+    
+      const confirmados = JSON.parse(evento.confirmados);
+      const pending = JSON.parse(evento.pending);
+  
+      const confirmadosFornosIds = confirmados.forno;
+      const pendingFornosIds = pending.forno;
+      const confirmadosGarconsIds = confirmados.garcons;
+      const pendingGarconsIds = pending.garcons;
+
+      Promise.all([
+        selectSupabase.getAfiliadosByIdsBulk(confirmadosFornosIds),
+        selectSupabase.getAfiliadosByIdsBulk(pendingFornosIds),
+        selectSupabase.getAfiliadosByIdsBulk(confirmadosGarconsIds),
+        selectSupabase.getAfiliadosByIdsBulk(pendingGarconsIds)
+      ]).then(([confirmadosFornos, pendingFornos, confirmadosGarcons, pendingGarcons]) => {
+        const eventoArrayConfirmadosFornos = [evento.id, ...confirmadosFornos.map((afiliado) => afiliado.nome)];
+        const eventoArrayPendingFornos = [evento.id, ...pendingFornos.map((afiliado) => afiliado.nome)];
+        const eventoArrayConfirmadosGarcons = [evento.id, ...confirmadosGarcons.map((afiliado) => afiliado.nome)];
+        const eventoArrayPendingGarcons = [evento.id, ...pendingGarcons.map((afiliado) => afiliado.nome)];
+  
+        setEventoArrayConfirmadosFornos((prevArray) => {
+          const existingArray = prevArray.find((arr) => arr[0] === evento.id);
+          if (existingArray) {
+            const updatedArray = prevArray.filter((arr) => arr[0] !== evento.id);
+            return [...updatedArray, eventoArrayConfirmadosFornos];
+          } else {
+            return [...prevArray, eventoArrayConfirmadosFornos];
+          }
+        });
+        
+        setEventoArrayPendingFornos((prevArray) => {
+          const existingArray = prevArray.find((arr) => arr[0] === evento.id);
+          if (existingArray) {
+            const updatedArray = prevArray.filter((arr) => arr[0] !== evento.id);
+            return [...updatedArray, eventoArrayPendingFornos];
+          } else {
+            return [...prevArray, eventoArrayPendingFornos];
+          }
+        });
+        
+        setEventoArrayConfirmadosGarcons((prevArray) => {
+          const existingArray = prevArray.find((arr) => arr[0] === evento.id);
+          if (existingArray) {
+            const updatedArray = prevArray.filter((arr) => arr[0] !== evento.id);
+            return [...updatedArray, eventoArrayConfirmadosGarcons];
+          } else {
+            return [...prevArray, eventoArrayConfirmadosGarcons];
+          }
+        });
+        
+        setEventoArrayPendingGarcons((prevArray) => {
+          const existingArray = prevArray.find((arr) => arr[0] === evento.id);
+          if (existingArray) {
+            const updatedArray = prevArray.filter((arr) => arr[0] !== evento.id);
+            return [...updatedArray, eventoArrayPendingGarcons];
+          } else {
+            return [...prevArray, eventoArrayPendingGarcons];
+          }
+        });
+        
+  
+        setEventoIndex((prevIndex) => prevIndex + 1); // Incrementa o índice do evento
+      });
+    }
+  }, [filteredEventos, selectSupabase, eventoIndex, eventos]);
 
   return (
     <div className={`App ${isLogedIn ? 'push-right' : ''}`}>
@@ -188,50 +285,37 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
               </div>
             </div>
             <div className="grid-container2" id='grid-container2'>
-              {filteredEventos.slice(0).map((item) => (  
-            <div key={item.id} onClick={() => handleListItemClick(item)}>
-              <table>
-                <tbody>
-                  <tr>
-                  <td>
-                    <span style={{ fontSize:'10px',color:'gray'}}>{item.nomecontratante}</span><br/>
-                    {item.endereco.length <= 32 ? <><br/>{item.endereco}</>  : <>
-                      {item.endereco.slice(0, 32)}<br/>{item.endereco.slice(32)}
-                    </>}
-                    <br/>Lindoia,Porto Alegre
-                  </td>
-                  </tr>
-                </tbody>
-                <tbody style={{ width:'20%'}}>
-                    <tr><td><span>Numero de Pessoas</span><br/><span style={{ marginLeft:'35%' ,color:'yellow'}}>{item.numeropessoas}</span><br/><span style={{ marginLeft:'30%' }}>Data</span><br/><span style={{ color:'orange'}}>{item.hora}/{item.dia}</span></td></tr>
-                </tbody>
-                <tbody style={{ display:'flex',width:'47%'}}>
-                  <tr><td>
-                  <div style={{ border:'none'}}>
-                    <img style={{ borderRadius:'30px', marginTop:'15%',width:'50px', height:'50px'}} alt='test' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/people_4.png"></img>
-                  </div></td></tr>
-                  <tr><td>
-                  <div style={{  border:'none'}}>
-                    <br/>
-                    <span style={{color:'gray', display:'inline-block', marginLeft:'5%'}}>Myrtle Erickson</span>
-                    <br/>
-                    <span style={{color:'green'}}>Confirmado</span>
-                  </div></td></tr>
-                  <tr><td>
-                  <div style={{ border:'none'}}>
-                    <img style={{ borderRadius:'30px', marginTop:'15%' ,width:'50px', height:'50px'}} alt='test' src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/people_8.png"></img>
-                  </div></td></tr>
-                  <tr><td>
-                  <div style={{ border:'none'}}>
-                    <br/>
-                    <span style={{color:'gray', display:'inline-block', marginLeft:'5%'}}>Myrtle Erickson</span>
-                    <br/>
-                    <span style={{color:'green'}}>Confirmado</span>
-                  </div></td></tr>
-                </tbody>
-              </table>
-            </div>
-              ))}
+            {filteredEventos.map((item) => {
+              const foundSubArray = eventoArrayConfirmadosFornos.find((subArray) => subArray[0] === item.id);
+              const foundSubArray1 = eventoArrayConfirmadosGarcons.find((subArray) => subArray[0] === item.id);
+              const foundSubArray2 = eventoArrayPendingFornos.find((subArray) => subArray[0] === item.id);
+              const foundSubArray3 = eventoArrayPendingGarcons.find((subArray) => subArray[0] === item.id);
+              
+              return (
+                <div key={item.id} onClick={() => handleListItemClick(item)} style={{ borderBottom: '1px solid gray' }}>
+                <table>
+                  <tbody>
+                    <tr>
+                    <td>
+                      <span style={{ fontSize:'10px',color:'gray'}}>{item.nomecontratante}</span><br/>
+                      {item.endereco.length <= 32 ? <><br/>{item.endereco}</>  : <>
+                        {item.endereco.slice(0, 32)}<br/>{item.endereco.slice(32)}
+                      </>}
+                      <br/>Lindoia,Porto Alegre
+                    </td>
+                    </tr>
+                  </tbody>
+                  <tbody style={{ width:'20%'}}>
+                      <tr><td><span>Numero de Pessoas</span><br/><span style={{ marginLeft:'35%' ,color:'yellow'}}>{item.numeropessoas}</span><br/><span style={{ marginLeft:'30%' }}>Data</span><br/><span style={{ color:'orange'}}>{item.hora}/{item.dia}</span></td></tr>
+                  </tbody>
+                  <tbody style={{ display:'flex',width:'47%'}}>
+                    <Carrosel fc={foundSubArray} fp={foundSubArray2}/>
+                    <Carrosel gc={foundSubArray1} gp={foundSubArray3}/>
+                  </tbody>
+                </table>
+              </div>
+              );
+            })}
             </div>
           </div>
           </div></>) : (

@@ -8,7 +8,8 @@ function InsertSupabase() {
 
   const insertAfiliado = async (nome, numero, opcao) => {
     try {
-      const { error } = await supabase.from("afiliados").insert([{ nome, numero, estado: 'inicial', opcao }]);
+      const { error } = await supabase.from("afiliados")
+      .insert([{ nome, numero, estado: 'inicial', opcao }])
       if (error) {
         console.error(error);
         throw new Error(error.message);
@@ -235,8 +236,20 @@ function InsertSupabase() {
     }
     return true;
   }
- 
-  return { insertAfiliado , insertEvento, updateEvento, removeAfiliadoPendente, removeAfiliadoEvento};
+  async function enviarFoto(photoData, photoname) {
+    const nomeDoArquivo = photoname;
+
+    const { error } = await supabase.storage
+      .from('pfp')
+      .upload(nomeDoArquivo, photoData);
+  
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Foto enviada com sucesso!');
+    }
+  }
+  return { insertAfiliado , insertEvento, updateEvento, removeAfiliadoPendente, removeAfiliadoEvento, enviarFoto};
 }
 
 export default InsertSupabase;

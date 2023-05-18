@@ -4,6 +4,7 @@ import './Createform.css';
 import InsertSupabase from './InsertSupabase';
 import Mapa from './Mapa'
 import SelectSupabase from './SelectSupabase';
+import DeleteModal from './DeleteModal.js'
 
   function CreateForm({ setShowForm, selectedItem, setSelectedItem }) {
 
@@ -140,7 +141,7 @@ import SelectSupabase from './SelectSupabase';
             document.body.removeChild(message);
             setShowForm(false);
             setSelectedItem(null);
-          }, 2000);
+          }, 1000);
         })
         .catch((error) => {
           console.error(error);
@@ -151,7 +152,7 @@ import SelectSupabase from './SelectSupabase';
           document.body.appendChild(message);
           setTimeout(() => {
             document.body.removeChild(message);
-          }, 2000);
+          }, 1000);
         });
     };
     function handleItemRemove(id) {
@@ -180,6 +181,22 @@ import SelectSupabase from './SelectSupabase';
     }
     function handleDelete(){
       setShowDeleteModal(false)
+      SelectSupabase({ setAfiliados: 1 }).deleteEvento(selectedItem.id);
+      f.forEach((id) => {
+        InsertSupabase().removeAfiliadoPendente(id, selectedItem.id);
+        InsertSupabase().removeAfiliadoEvento(id, selectedItem.id)
+      });
+       // Exibe mensagem de aviso na tela
+       const message = document.createElement('div');
+       message.innerText =  'Evento deletado com sucesso!';
+       message.classList.add('success-message');
+       document.body.appendChild(message);        
+       // Remove mensagem de aviso e limpa campos após 2 segundos
+       setTimeout(() => {
+         document.body.removeChild(message);
+         setShowForm(false);
+         setSelectedItem(null);
+       }, 1000); 
     }
     useEffect(() => {
       const escFunction = (event) => {
@@ -193,7 +210,7 @@ import SelectSupabase from './SelectSupabase';
       return () => {
         document.removeEventListener('keydown', escFunction, false);
       };
-    }, [fornosConfirmados, selectedItem, setSelectedItem, setShowForm]);
+    }, [setSelectedItem, setShowForm]);
     useEffect(() => {
       if (!dia || !hora) {
         setshowModal(true);
@@ -245,8 +262,9 @@ import SelectSupabase from './SelectSupabase';
         setGarconsPending(garconsPendingIds ? garconsPendingIds : []);
         setF([...fornosConfirmadosIds, ...fornosPendingIds, ...garconsConfirmadosIds, ...garconsPendingIds])
       }
-    }, [selectedItem]);    
+    }, [selectedItem]);   
   return (
+    <> {showDeleteModal && <DeleteModal Delete={handleDelete}/>}
     <div className="form-container" >
         <form className='eventform'>
           <div className='autocomplete-container' id='autocomplete'>          
@@ -274,9 +292,9 @@ import SelectSupabase from './SelectSupabase';
       <button className='sendForm' type="submit" onClick={handleSubmit}>
         {selectedItem ? 'Salvar' : 'Enviar'}
       </button>
-      {selectedItem ? (<button style={{color:'white',font:'bold',backgroundColor:'red',position:'absolute', bottom:'-8%', width:'15%',height:'8%'}}>Deletar Evento</button>) : (<></>)
+      {selectedItem ? (<button onClick={() => setShowDeleteModal(true)} style={{color:'white',font:'bold',backgroundColor:'red',position:'absolute', bottom:'-8%', width:'15%',height:'8%'}}>Deletar Evento</button>) : (<></>)
       }
-      </div>
+      </div></>
       )}
 export default CreateForm;
 

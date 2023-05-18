@@ -31,6 +31,7 @@
     "react-icons": "^4.7.1",
     "react-leaflet": "^4.2.1",
     "react-modal": "^3.16.1",
+    "react-responsive-carousel": "^3.2.23",
     "react-scripts": "5.0.1",
     "react-spring": "^9.7.1",
     "rsuite": "^5.24.1",

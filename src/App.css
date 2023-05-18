@@ -71,10 +71,10 @@
     background-color: #505e74;
     grid-template-columns: repeat(3, 33%);
 }
+
 .grid-container2 div{
     font-size: 10px;
     color: white;
-    border-bottom: 1px solid gray;
     margin-right: 3%;
 }
 .grid-container2 div:hover{

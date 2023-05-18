@@ -5,7 +5,6 @@ import AfiliadosList from './AfiliadosList';
 import 'material-design-iconic-font/dist/css/material-design-iconic-font.min.css';
 function Sidebar() {
   const [photoUrl, setPhotoUrl] = useState('https://via.placeholder.com/70x121'); // Armazena a URL da imagem selecionada
-  
   const [divHeights, setDivHeights] = useState({
     'word1': '3%',
     'word2': '20%',
@@ -31,13 +30,25 @@ function Sidebar() {
     const nome = event.target.elements.name.value;
     const numero = event.target.elements.number.value;
     const opcao = event.target.elements.opcoes.value;
-    console.log(opcao)
+
+    const fileInput = document.getElementById('file-input');
+    const file = fileInput.files[0];
+  
+    if (!file) {
+      const message = document.createElement('div');
+      message.innerText = 'INSERIR FOTO';
+      message.classList.add('error-message');
+      document.body.appendChild(message);
+      setTimeout(() => {
+        document.body.removeChild(message);
+      }, 2000);
+      return;
+    }
 
     const data = {
       numero: `${numero}@c.us`,
       mensagem: `Olá, ${nome}! Você foi adicionado ao quadro de afiliados da Cecchin Eventos.`,
     };
-  
     // Configura a opção da requisição
     const options = {
       method: 'POST',
@@ -46,7 +57,6 @@ function Sidebar() {
       },
       body: JSON.stringify(data),
     };
-  
     // Chama a função insertAfiliado do componente InsertSupabase passando os valores obtidos
     InsertSupabase()
       .insertAfiliado(nome, numero, opcao)
@@ -54,8 +64,20 @@ function Sidebar() {
         // Chama o fetch para enviar a mensagem via API do Whatsapp
         fetch('https://1647-18-230-24-247.ngrok-free.app/afiliadoaddmsg', options)
           .then((response) => response.json())
-          .then((data) => console.log(data))
+          .then((data) => console.log(data.id))
           .catch((error) => console.error(error));
+          const fileInput = document.getElementById('file-input');
+          const file = fileInput.files[0];
+          const clearFileInput = () => {
+            if (file) {
+              file.value = null;
+            }
+          };
+          if (file) {
+            console.log(nome)
+            InsertSupabase().enviarFoto(file, nome);
+            clearFileInput();
+          } 
   
         // Exibe mensagem de aviso na tela
         const message = document.createElement('div');
@@ -82,19 +104,16 @@ function Sidebar() {
         }, 2000);
       });
   };
-
-  
   const handleClick = (word) => {
     const newHeights = { ...divHeights };
     newHeights[word] = divHeights[word] === '3%' ? '20%' : '3%';
     setDivHeights(newHeights);
   };
-  const [iframewidth, setiframewidth] = useState(false);
+/*   const [iframewidth, setiframewidth] = useState(false);
   function onclicktest() {
-    console.log('test')
     setiframewidth(!iframewidth);
-  }
-
+  } */
+  
   return (
     <div className='sidebar content1'>
       <div><h1 style={{ marginLeft:'10px'}} className="h1style">Cecchin Eventos</h1></div>
@@ -113,8 +132,8 @@ function Sidebar() {
           { divHeights['word1'] === '3%' ? ( null ) : ( 
                   <div className='profile'>
                   <div className='photo'>
-                    <img src={photoUrl} alt='pfp' onClick={() => document.getElementById('fileInput').click()}/>
-                  <input id='fileInput' type='file' accept='image/*' onChange={handleFileSelect} style={{display: 'none'}} />
+                  <img src={photoUrl} alt='pfp' onClick={() => document.getElementById('file-input').click()}/>
+                  <input id='file-input' type='file' accept='image/*' onChange={handleFileSelect} style={{display: 'none'}} />
                   </div>
                   <form onSubmit={handleSave}>
                   <div>
@@ -152,7 +171,7 @@ function Sidebar() {
           <span style={{ color: divHeights['word2'] === '3%' ? 'gray' : 'white', marginLeft:'10%', marginTop:'7%', cursor: 'pointer'}} onClick={() => handleClick('word2')}>Afiliados</span></div>
           { divHeights['word2'] === '3%' ? ( null ) : (<AfiliadosList></AfiliadosList>) }
         </div>
-        <button style={{width: iframewidth ? '20%' : '18%', height:'3%', marginTop: iframewidth ? '95%' : '200%'}} onClick={() => onclicktest()}>
+{/*         <button style={{width: iframewidth ? '20%' : '18%', height:'3%', marginTop: iframewidth ? '95%' : '200%'}} onClick={() => onclicktest()}>
           {iframewidth ? 'Fechar' : 'Abrir'}
         </button>
         <div style={{height: "40%", width: iframewidth ? '300%' : '105%' }}>
@@ -163,42 +182,6 @@ function Sidebar() {
                 height="100%"
                 style={{ border: "0", borderRadius: "4px" }}
             />
-        </div>
-{/*         <div
-          style={{ height: `${divHeights['word3']}`, width: '100%', margin: 0, padding: 0 }}>
-            <div style={{
-              marginLeft:'1%',
-              width: divHeights['word3'] === '3%' ? '0%' : '1%',
-              height: divHeights['word3'] === '3%' ? '0%' : '2%',
-              position:'absolute',
-              backgroundColor:'gray'
-            }}>
-            </div>
-          <span style={{ color: divHeights['word3'] === '3%' ? 'gray' : 'white', marginLeft:'20%', cursor: 'pointer'}} onClick={() => handleClick('word3')}>Palavra 3</span>
-        </div>
-        <div
-          style={{ height: `${divHeights['word4']}`, width: '100%', margin: 0, padding: 0 }}>
-            <div style={{
-              marginLeft:'1%',
-              width: divHeights['word4'] === '3%' ? '0%' : '1%',
-              height: divHeights['word4'] === '3%' ? '0%' : '2%',
-              position:'absolute',
-              backgroundColor:'gray'
-            }}>
-            </div>
-          <span style={{color: divHeights['word4'] === '3%' ? 'gray' : 'white', marginLeft:'20%', cursor: 'pointer'}} onClick={() => handleClick('word4')}>Palavra 4</span>
-        </div>
-        <div
-          style={{ height: `${divHeights['word5']}`, width: '100%', margin: 0, padding: 0 }}>
-            <div style={{
-              marginLeft:'1%',
-              width: divHeights['word5'] === '3%' ? '0%' : '1%',
-              height: divHeights['word5'] === '3%' ? '0%' : '2%',
-              position:'absolute',
-              backgroundColor:'gray'
-            }}>
-            </div>
-          <span style={{color: divHeights['word5'] === '3%' ? 'gray' : 'white', marginLeft:'20%', cursor: 'pointer'}} onClick={() => handleClick('word5')}>Palavra 5</span>
         </div> */}
       </div>
     </div>

@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './ModalCountdown.css'
 
-function Modal({ModalContent}) {
+function DeleteModal({ Delete }) {
   // Estado para controlar a visibilidade do modal
   const [visible, setVisible] = useState(true);
   // Estado para controlar a contagem regressiva
   const [countdown, setCountdown] = useState(5);
-  const a = ModalContent;
 
 
   // Função para fechar o modal
   function closeModal() {
         setVisible(false);
+        Delete();
       }
+  // Função para fechar o modal
+    function closeModal2() {
+      setVisible(false);
+    }
 
   // Função que conta 5 segundos e fecha automaticamente o modal
   useEffect(() => {
@@ -23,10 +27,9 @@ function Modal({ModalContent}) {
     return () => clearInterval(timer);
   }, []);
 
-  // Atualiza a contagem regressiva no botão de fechar
   useEffect(() => {
     if (countdown === 0) {
-      closeModal();
+      closeModal2();
     }
   }, );
 
@@ -37,7 +40,7 @@ function Modal({ModalContent}) {
       <div className='modal'>
         <div className='modal-content'>
           <div className='modalbody'>
-            {a ? (<h2>{a}</h2>):(<h2>Insira dia e hora!</h2>)} 
+            <h2>Cuidado! Está prestes a deletar o evento.</h2> 
           </div>
           <button className="close-btn" onClick={closeModal}>
           Deletar ({countdown})
@@ -50,5 +53,5 @@ function Modal({ModalContent}) {
   );
 }
 
-export default Modal;
+export default DeleteModal;
 
