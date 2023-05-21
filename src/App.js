@@ -20,7 +20,7 @@ function App() {
   const [eventos, setEventos] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDate, setSelectedDate] = useState(); // novo estado para armazenar a data selecionada
-  const [isLogedIn, setIsLogedIn] = useState(true);
+  const [isLogedIn, setIsLogedIn] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [GreenLight, setGreenLight] = useState(false);
   const [dashboard, setDashboard] = useState(false);
@@ -332,8 +332,8 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
             <Image src={door1} alt="bg"  />
             </>) : (
             <>
-              <Image src={door3} alt="bg" style={{ position:'fixed' }} onClick={onClickShowForm} />
-              <Image src={door2} alt="bg"  />
+              <Image src={door3} alt="bg" style={{ position:'fixed' }}  />
+              <Image src={door2} alt="bg" style={{ position:'fixed' }} onClick={onClickShowForm}/>
             </>
               )}                          
             </>

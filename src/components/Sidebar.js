@@ -118,8 +118,7 @@ function Sidebar() {
     <div className='sidebar content1'>
       <div><h1 style={{ marginLeft:'10px'}} className="h1style">Cecchin Eventos</h1></div>
       <div style={{ height: '100%', width: '100%' }}>
-        <div
-          style={{ height: `${divHeights['word1']}`, width: '100%' }}>
+        <div className='cadastrarafiliado'>
             <div style={{
               marginLeft:'1%',
               width: divHeights['word1'] === '3%' ? '0%' : '1%',
