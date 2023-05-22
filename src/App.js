@@ -34,6 +34,7 @@ function App() {
 
   const makeLogin = () => {
       setIsLogedIn(true);
+      // wtf happening
   };
   useEffect(() => {
     if (GreenLight) {
