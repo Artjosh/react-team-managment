@@ -98,7 +98,7 @@ import './afiliadoslist.css';
         };
         
         return (
-            <div>
+            <div className='listcontainer'>
               <div className='listheader' style={{ display:'flex' }}>
               <input
                     className="maincheck"

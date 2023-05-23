@@ -1,55 +1,53 @@
 .calendar{
-	width:100%;
-	background:#ededef;
-	font:bold 20px "Lucida Sans Unicode", Arial Black, Arial, Helvetica, sans-serif;
-	text-align:center;
-	color:#000;
-	border-radius:3px;	
-	position:absolute;
-	cursor: pointer;
-	}
+width:100%;
+background:#ededef;
+font:bold 20px "Lucida Sans Unicode", Arial Black, Arial, Helvetica, sans-serif;
+text-align:center;
+color:#000;
+border-radius:3px;	
+position:absolute;
+cursor: pointer;
+}
 .dia {
-	display: inline-flex;
-	font-size: 15px;
-	margin-top: 15px;
-	}
+display: inline-flex;
+font-size: 15px;
+margin-top: 15px;
+}
 .diasemana {
-	font-size: 15px;
-	}
+font-size: 15px;
+}
 .calendar em{
-	display:block;
-	font:13px/20px "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
-	color:#fff;
-	background:#ff0000;
-	border-bottom-right-radius:3px;
-	border-bottom-left-radius:3px;	
-	border-top:1px solid #00365a;
-	}
-
+display:block;
+font:13px/20px "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+color:#fff;
+background:#ff0000;
+border-bottom-right-radius:3px;
+border-bottom-left-radius:3px;	
+border-top:1px solid #00365a;
+}
 .calendar:before, .calendar:after{
-	content:'';
-	float:left;
-	position:absolute;
-	top:5px;	
-	width:8px;
-	height:8px;
-	background:#111;
-	z-index:1;
-	border-radius:10px;
-	}  
+content:'';
+float:left;
+position:absolute;
+top:5px;	
+width:8px;
+height:8px;
+background:#111;
+z-index:1;
+border-radius:10px;
+}  
 .calendar:before{left:11px;}	
 .calendar:after{right:11px;}
-
 .calendar em:before, .calendar em:after{
-	content:'';
-	float:left;
-	position:absolute;
-	top:-5px;	
-	width:4px;
-	height:14px;
-	background:#dadada;
-	z-index:2;
-	border-radius:2px;
-	}
+content:'';
+float:left;
+position:absolute;
+top:-5px;	
+width:4px;
+height:14px;
+background:#dadada;
+z-index:2;
+border-radius:2px;
+}
 .calendar em:before{left:13px;}	
 .calendar em:after{right:13px;}	

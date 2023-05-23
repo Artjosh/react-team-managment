@@ -289,7 +289,7 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
             onDragOver={handleDragOver}
             style={{ display:'flex', width: '50%', height: '280px', border: '1px solid black', overflow: 'auto', marginTop:'20px', marginLeft:'5px', backgroundColor:'white' }}
           ><span style={{ position:'fixed', marginTop:'-20px' }}>{className}</span>
-            <button onClick={handleExpandir} style={{ backgroundImage: `url(${icon2})`, marginTop:'-12px',border:'1px solid black' , position:'fixed', marginLeft:'12.6%', width:'23px', height:'12px' }}>
+            <button className='expandido' onClick={handleExpandir} style={{ backgroundImage: `url(${icon2})`, marginTop:'-12px',border:'1px solid black' , position:'fixed', marginLeft:'12.6%', width:'23px', height:'12px' }}>
             </button>
             <span style={{fontSize: '15px', width:'100%'}}>
               {itensArrastados.map((item, ) => (
@@ -311,7 +311,7 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
               style={{ marginLeft:'5px', width: '50%', height: '180px', display: 'flex', border: '1px solid black', overflow: 'auto', marginTop:'20px', backgroundColor:'white' }}
             ><span style={{ position:'fixed', marginTop:'-20px' }}>{className}</span>
               {itensArrastados.length >= 0 && (
-                <button onClick={handleExpandir} style={{ backgroundImage: `url(${icon})`, border:'1px solid black' , position:'fixed', marginLeft:'12.6%', marginTop:'9.25%', width:'23px', height:'12px' }}>
+                <button className='expandir' onClick={handleExpandir} style={{ marginLeft:'12.6%', backgroundImage: `url(${icon})`, border:'1px solid black' , position:'fixed', width:'23px', height:'12px' }}>
                 </button>
               )}<span style={{fontSize: '15px', width:'100%'}}>
                 {itensArrastados.map((item) => (

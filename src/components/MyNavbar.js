@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './MyNavBar.css';
 import { Navbar, Button } from 'react-bootstrap';
-import Sidebar from './Sidebar';
 import Searchbar from './Searchbar.js';
 import addbutton from './addbutton.png';
 
@@ -25,7 +24,6 @@ const ButtonClose = () => {
 
   return (
     <Navbar expand="lg">
-      <Sidebar/>
       <Searchbar onSearch={handleSearch} />
       <img src={addbutton} onClick={handleShowForm} alt="addbutton" className="addevent"/>
       <Button style={{ position:'absolute', right: '300px', border:'none' }} onClick={ButtonClose}>Logout</Button>

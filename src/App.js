@@ -14,6 +14,7 @@ import door3 from './3.png';
 import CardList from './components/CardList';
 import Datepicker from './components/Datepicker.js';
 import Carrosel from './components/Carrosel.js'
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -34,7 +35,6 @@ function App() {
 
   const makeLogin = () => {
       setIsLogedIn(true);
-      // wtf happening
   };
   useEffect(() => {
     if (GreenLight) {
@@ -134,12 +134,111 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
   }
   const gridContainer = document.getElementById('grid-container2');
   if (gridContainer) {
-    if (filteredEventos.length <= 30) {
-      gridContainer.style.overflowY = 'hidden';
-    } else {
-      gridContainer.style.overflowY = 'scroll';
+    if (window.matchMedia('(min-width: 499px) and (max-width: 768px)').matches) {
+      if (window.innerHeight >= 500 && window.innerHeight < 650) {
+        if (filteredEventos.length <= 3) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+        if (filteredEventos.length <= 4) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 880) {
+        if (filteredEventos.length <= 6) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      }
+    } else if (window.matchMedia('(min-width: 769px) and (max-width: 1200px)').matches) {
+      if (window.innerHeight >= 500 && window.innerHeight < 650) {
+        if (filteredEventos.length <= 3) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+        if (filteredEventos.length <= 5) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 880) {
+        if (filteredEventos.length <= 8) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      }
+    } else if (window.matchMedia('(min-width: 1201px) and (max-width: 1440px)').matches) {
+      if (window.innerHeight >= 500 && window.innerHeight < 650) {
+        if (filteredEventos.length <= 6) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+        if (filteredEventos.length <= 10) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 880) {
+        if (filteredEventos.length <= 14) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      }
+    } else if (window.matchMedia('(min-width: 1441px) and (max-width: 1680px)').matches) {
+      if (window.innerHeight >= 500 && window.innerHeight < 650) {
+        if (filteredEventos.length <= 9) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+        if (filteredEventos.length <= 12) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 880) {
+        if (filteredEventos.length <= 18) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      }
+    } else if (window.matchMedia('(min-width: 1681px)').matches) {
+      if (window.innerHeight >= 500 && window.innerHeight < 650) {
+        if (filteredEventos.length <= 12) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+        if (filteredEventos.length <= 15) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      } else if (window.innerHeight >= 880) {
+        if (filteredEventos.length <= 27) {
+          gridContainer.style.overflowY = 'hidden';
+        } else {
+          gridContainer.style.overflowY = 'scroll';
+        }
+      }
     }
   }
+  
+  
+  
   const selectSupabase = SelectSupabase({ setEventos });
   const eventosRef = useRef([]);
   
@@ -218,7 +317,8 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
   return (
     <div className={`App ${isLogedIn ? 'push-right' : ''}`}>
       {isLogedIn ? (
-      <><MyNavbar
+      <>  <Sidebar/>
+          <MyNavbar
           handleLogout={handleLogout}
           handleSearch={handleSearch}
           handleShowForm={handleShowForm}
@@ -238,7 +338,7 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
                 </div>
               </div>
               <div className="footer" style={{color:'white'}}>
-              <div className='4ft'>
+              <div className='ft'>
                 <table>
                     <tbody>
                       <tr><th>Informações</th></tr>
@@ -248,12 +348,12 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
                     </tbody>
                     <tbody>
                       <tr><th>Afiliados
-                      <br/><span style={{fontSize:'15px', position:'absolute', marginTop:'-0.5%', marginLeft: '-3%'}}>Forno</span>
-                      <span style={{fontSize:'15px', position:'absolute', marginTop:'-0.5%', marginLeft: '3%'}}>Garçon</span></th></tr>
+                      <br/><span className='forno'>Forno</span>
+                      <span className='garcon'>Garçon</span></th></tr>
                     </tbody>
                   </table>
               </div>
-              <div className='4ft'>
+              <div className='ft'>
                 <table>
                     <tbody>
                       <tr><th>Informações</th></tr>
@@ -263,12 +363,12 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
                     </tbody>
                     <tbody>
                       <tr><th>Afiliados
-                      <br/><span style={{fontSize:'15px', position:'absolute', marginTop:'-0.5%', marginLeft: '-3%'}}>Forno</span>
-                      <span style={{fontSize:'15px', position:'absolute', marginTop:'-0.5%', marginLeft: '3%'}}>Garçon</span></th></tr>
+                      <br/><span className='forno'>Forno</span>
+                      <span className='garcon'>Garçon</span></th></tr>
                     </tbody>
                   </table>
               </div>
-              <div className='4ft'>
+              <div className='ft'>
               <table>
                   <tbody>
                     <tr><th>Informações</th></tr>
@@ -278,8 +378,8 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
                   </tbody>
                   <tbody>
                     <tr><th>Afiliados
-                    <br/><span style={{fontSize:'15px', position:'absolute', marginTop:'-0.5%', marginLeft: '-3%'}}>Forno</span>
-                    <span style={{fontSize:'15px', position:'absolute', marginTop:'-0.5%', marginLeft: '3%'}}>Garçon</span></th></tr>
+                    <br/><span className='forno'>Forno</span>
+                    <span className='garcon'>Garçon</span></th></tr>
                   </tbody>
                 </table>
               </div>

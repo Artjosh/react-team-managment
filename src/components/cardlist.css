@@ -4,7 +4,6 @@
     font-family: "Montserrat", "Helvetica", "Open Sans", "Arial";
     font-size: 13px;
 }
-
 .card {
   border-radius: 8px;
   color: white;
@@ -41,5 +40,26 @@
 .card.red {
   background-color: #D65B4A;
 }
+@media (min-width: 499px) and (max-width: 768px){
+  .card-list{
+    padding-top: 7%;
+  }
+}
+@media (min-width: 769px) and (max-width: 992px) {
+  .card-list{
+    padding-top: 4%;
+  }
+}
+@media (min-width: 993px) and (max-width: 1200px) {
+  .card-list{
+    padding-top: 2%;
+  }
+}
+@media (min-width: 1201px) and (max-width: 1440px) {
+  .card-list{
+    padding-top: 1%;
+  }
+}
+@media (min-width: 1441px) and (max-width: 1680px){ 
 
-
+}

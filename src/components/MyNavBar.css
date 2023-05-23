@@ -6,7 +6,6 @@
   z-index: 1;
   width: 100%;
 }
-
 .h1style{
   color: #fff;
   font-style: italic;
@@ -23,7 +22,6 @@
   z-index: 1;
   position: absolute;
 }
-
 .btn{
   background: none;
   padding: 5px 20px;
@@ -58,4 +56,14 @@
 .btn.active::before {
   color: #fff;
   background: #3498db;
+}
+@media (min-width: 499px) and (max-width: 1200px){
+  .btn{
+    width: 20%;
+    right: 17% !important;
+  }
+}
+@media (min-width: 1201px) and (max-width: 1440px) {
+}
+@media (min-width: 1441px) and (max-width: 1680px){ 
 }
