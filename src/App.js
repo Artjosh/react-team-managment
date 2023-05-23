@@ -133,112 +133,120 @@ const formattedCurrentDate = moment(currentDate).format('YYYY-MM-DD');
     setIsLogedIn(!isLogedIn);
   }
   const gridContainer = document.getElementById('grid-container2');
-  if (gridContainer) {
-    if (window.matchMedia('(min-width: 499px) and (max-width: 768px)').matches) {
-      if (window.innerHeight >= 500 && window.innerHeight < 650) {
-        if (filteredEventos.length <= 3) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    if (gridContainer) {
+      if (window.matchMedia('(min-width: 499px) and (max-width: 768px)').matches) {
+        if (window.innerHeight >= 500 && window.innerHeight < 650) {
+          if (filteredEventos.length <= 3) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+          if (filteredEventos.length <= 4) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 880) {
+          if (filteredEventos.length <= 6) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
         }
-      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
-        if (filteredEventos.length <= 4) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
+      } else if (window.matchMedia('(min-width: 769px) and (max-width: 1200px)').matches) {
+        if (window.innerHeight >= 500 && window.innerHeight < 650) {
+          if (filteredEventos.length <= 3) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+          if (filteredEventos.length <= 5) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 880) {
+          if (filteredEventos.length <= 8) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
         }
-      } else if (window.innerHeight >= 880) {
-        if (filteredEventos.length <= 6) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
+      } else if (window.matchMedia('(min-width: 1201px) and (max-width: 1440px)').matches) {
+        if (window.innerHeight >= 500 && window.innerHeight < 650) {
+          if (filteredEventos.length <= 6) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+          if (filteredEventos.length <= 10) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 880) {
+          if (filteredEventos.length <= 14) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
         }
-      }
-    } else if (window.matchMedia('(min-width: 769px) and (max-width: 1200px)').matches) {
-      if (window.innerHeight >= 500 && window.innerHeight < 650) {
-        if (filteredEventos.length <= 3) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
+      } else if (window.matchMedia('(min-width: 1441px) and (max-width: 1680px)').matches) {
+        if (window.innerHeight >= 500 && window.innerHeight < 650) {
+          if (filteredEventos.length <= 9) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+          if (filteredEventos.length <= 12) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 880) {
+          if (filteredEventos.length <= 18) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
         }
-      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
-        if (filteredEventos.length <= 5) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      } else if (window.innerHeight >= 880) {
-        if (filteredEventos.length <= 8) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      }
-    } else if (window.matchMedia('(min-width: 1201px) and (max-width: 1440px)').matches) {
-      if (window.innerHeight >= 500 && window.innerHeight < 650) {
-        if (filteredEventos.length <= 6) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
-        if (filteredEventos.length <= 10) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      } else if (window.innerHeight >= 880) {
-        if (filteredEventos.length <= 14) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      }
-    } else if (window.matchMedia('(min-width: 1441px) and (max-width: 1680px)').matches) {
-      if (window.innerHeight >= 500 && window.innerHeight < 650) {
-        if (filteredEventos.length <= 9) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
-        if (filteredEventos.length <= 12) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      } else if (window.innerHeight >= 880) {
-        if (filteredEventos.length <= 18) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      }
-    } else if (window.matchMedia('(min-width: 1681px)').matches) {
-      if (window.innerHeight >= 500 && window.innerHeight < 650) {
-        if (filteredEventos.length <= 12) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
-        if (filteredEventos.length <= 15) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
-        }
-      } else if (window.innerHeight >= 880) {
-        if (filteredEventos.length <= 27) {
-          gridContainer.style.overflowY = 'hidden';
-        } else {
-          gridContainer.style.overflowY = 'scroll';
+      } else if (window.matchMedia('(min-width: 1681px)').matches) {
+        if (window.innerHeight >= 500 && window.innerHeight < 650) {
+          if (filteredEventos.length <= 12) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 650 && window.innerHeight < 880) {
+          if (filteredEventos.length <= 15) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
+        } else if (window.innerHeight >= 880) {
+          if (filteredEventos.length <= 27) {
+            gridContainer.style.overflowY = 'hidden';
+          } else {
+            gridContainer.style.overflowY = 'scroll';
+          }
         }
       }
     }
-  }
-  
-  
-  
+  }, 5000); // Intervalo de 10 segundos (10000 milissegundos)
+
+  // Retorne uma função de limpeza para remover o intervalo quando o componente for desmontado
+  return () => {
+    clearInterval(interval);
+  };
+}, [gridContainer, filteredEventos]);
+
   const selectSupabase = SelectSupabase({ setEventos });
   const eventosRef = useRef([]);
   
