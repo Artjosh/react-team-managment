@@ -295,7 +295,7 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
               {itensArrastados.map((item, ) => (
                 <div style={{ display: 'flex', position: 'relative' }} key={item.id}>{item.nome}
                 {((fornosConfirmados && fornosConfirmados.includes(item.id)) || (garconsConfirmados && garconsConfirmados.includes(item.id)) ? (
-                      <i className="zmdi zmdi-check" style={{ font:'bold', fontSize:'200%', color:'green', position: 'absolute', right: '10%' }}></i>
+                      <i className="zmdi zmdi-check" style={{ font:'bold', fontSize:'200%', color:'green', position: 'absolute', right: '10%', marginRight:'10px' }}></i>
                     ) : (
                       <></>
                     ))}
@@ -318,7 +318,7 @@ const testing = 'Algum afiliado não foi inserido por estar ocupado neste horari
                   <div style={{ display: 'flex', position: 'relative' }} key={item.id}>
                   {item.nome}
                   {((fornosConfirmados && fornosConfirmados.includes(item.id)) || (garconsConfirmados && garconsConfirmados.includes(item.id)) ? (
-                      <i className="zmdi zmdi-check" style={{ font:'bold', fontSize:'200%', color:'green', position: 'absolute', right: '10%' }}></i>
+                      <i className="zmdi zmdi-check" style={{ font:'bold', fontSize:'200%', color:'green', position: 'absolute', right: '10%', marginRight:'10px' }}></i>
                     ) : (
                       <></>
                     ))}

@@ -53,6 +53,9 @@ transition: background-color 0.2s;
 .search-button2:hover {
 background-color: #333;
 }
+.expandir{
+	margin-top: -0.5%;
+}
 @media (min-width: 499px) and (max-width: 1200px){
 	.form-container {
 		background-color: #f5f5f5;

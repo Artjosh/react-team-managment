@@ -292,7 +292,7 @@ import DeleteModal from './DeleteModal.js'
       <button className='sendForm' type="submit" onClick={handleSubmit}>
         {selectedItem ? 'Salvar' : 'Enviar'}
       </button>
-      {selectedItem ? (<button onClick={() => setShowDeleteModal(true)} style={{color:'white',font:'bold',backgroundColor:'red',position:'absolute', bottom:'-8%', width:'15%',height:'8%'}}>Deletar Evento</button>) : (<></>)
+      {selectedItem ? (<button onClick={() => setShowDeleteModal(true)} style={{color:'white',font:'bold',backgroundColor:'red',position:'absolute', bottom:'-8%', width:'21%',height:'8%'}}>Deletar Evento</button>) : (<></>)
       }
       </div></>
       )}
